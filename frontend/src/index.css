@@ -6,6 +6,44 @@
 
 * {
     font-family: Outfit;
+
+}
+
+/* Persistent dark background */
+body {
+    @apply bg-gray-900; /* Dark background color */
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 20%, rgba(137, 149, 176, 0.9) 0%, rgba(48, 62, 88, 0.9) 90%);
+    z-index: -2; /* Behind everything but above body bg */
+    pointer-events: none;
+}
+
+/* Optional: Add subtle noise texture */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    z-index: -1; /* Above gradient but below content */
+    pointer-events: none;
+}
+
+/* Main content container - adjust as needed */
+#root {
+    @apply min-h-screen;
+    position: relative;
 }
 
 .active hr {
@@ -13,8 +51,8 @@
 }
 
 @media (max-width:740px) {
-    .active  p{
-       @apply text-white bg-primary
+    .active p {
+        @apply text-white bg-primary
     }
 }
 

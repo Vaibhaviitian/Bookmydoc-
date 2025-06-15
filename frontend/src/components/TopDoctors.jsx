@@ -1,33 +1,63 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
+
 const TopDoctors = () => {
-
     const navigate = useNavigate()
-
     const { doctors } = useContext(AppContext)
 
     return (
-        <div className='flex flex-col items-center gap-4 my-16 text-[#262626] md:mx-10'>
-            <h1 className='text-3xl font-medium'>Top Doctors to Book</h1>
-            <p className='sm:w-1/3 text-center text-sm'>Simply browse through our extensive list of trusted doctors.</p>
-            <div className='w-full grid grid-cols-auto gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
-                {doctors.slice(0, 10).map((item, index) => (
-                    <div onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }} className='border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500' key={index}>
-                        <img className='bg-[#EAEFFF]' src={item.image} alt="" />
-                        <div className='p-4'>
-                            <div className={`flex items-center gap-2 text-sm text-center ${item.available ? 'text-green-500' : "text-gray-500"}`}>
-                                <p className={`w-2 h-2 rounded-full ${item.available ? 'bg-green-500' : "bg-gray-500"}`}></p><p>{item.available ? 'Available' : "Not Available"}</p>
+        <div className='py-16 px-4 md:px-10 bg-white'>
+            <div className='max-w-6xl mx-auto'>
+                <div className='text-center mb-12'>
+                    <h2 className='text-3xl font-bold text-black mb-3'>Our Featured Healthcare Providers</h2>
+                    <p className='text-black-900 max-w-2xl mx-auto'>
+                        Highly qualified professionals dedicated to your wellbeing
+                    </p>
+                </div>
+                
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+                    {doctors.slice(0, 8).map((item, index) => (
+                        <div 
+                            onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }} 
+                            className='bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-all cursor-pointer'
+                            key={index}
+                        >
+                            <div className='relative pt-[70%] bg-gray-100'>
+                                <img 
+                                    className='absolute top-0 left-0 w-full h-full object-cover' 
+                                    src={item.image} 
+                                    alt={item.name} 
+                                />
+                                <span className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium ${item.available ? 'bg-green-100 text-black' : 'bg-gray-100 text-gray-900'}`}>
+                                    {item.available ? 'Available' : 'Booked'}
+                                </span>
                             </div>
-                            <p className='text-[#262626] text-lg font-medium'>{item.name}</p>
-                            <p className='text-[#5C5C5C] text-sm'>{item.speciality}</p>
+                            <div className='p-4'>
+                                <h3 className='font-bold text-lg text-gray-900 mb-1'>{item.name}</h3>
+                                <p className='text-black text-sm mb-2'>{item.speciality}</p>
+                                <div className='flex items-center text-sm text-black'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    {item.hospital || "City Hospital"}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                
+                <div className='text-center mt-10'>
+                    <button 
+                        onClick={() => { navigate('/doctors'); scrollTo(0, 0) }} 
+                        className='inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-full shadow-sm text-black bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors'
+                    >
+                        View All Medical Professionals
+                    </button>
+                </div>
             </div>
-            <button onClick={() => { navigate('/doctors'); scrollTo(0, 0) }} className='bg-[#EAEFFF] text-gray-600 px-12 py-3 rounded-full mt-10'>more</button>
         </div>
-
     )
 }
 
